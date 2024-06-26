@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899-12-30 00:00:00.000.621,C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\TestAnalisisChile\UPokedeck.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.036,=C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\TestAnalisisChile\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.247,C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\TestAnalisisChile\Unit1.pas=C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\TestAnalisisChile\u_urlOpen.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.068,C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\TestAnalisisChile\TestAnalisisChile.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.621,C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.fmx=C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\TestAnalisisChile\UPokedeck.fmx</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.513,=C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.941,=C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2024-06-26 05:55:16.326,=C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\TestAnalisisChile\Unit2.pas</Transaction>
+    <Transaction>2024-06-26 05:57:33.742,C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\TestAnalisisChile\ULoading.pas=C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\TestAnalisisChile\Unit2.pas</Transaction>
+    <Transaction>2024-06-26 05:57:33.742,C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\TestAnalisisChile\ULoading.fmx=C:\Users\fulgo\OneDrive\Documentos\Embarcadero\Studio\Projects\TestAnalisisChile\Unit2.fmx</Transaction>
+  </Transactions>
+</BorlandProject>

@@ -1,0 +1,479 @@
+unit UPokedeck;
+
+interface
+
+uses
+  System.SysUtils,            System.Types,           System.UITypes,
+  System.Classes,             System.Variants,        FMX.Types,
+  FMX.Controls,               FMX.Forms,              FMX.Graphics,
+  FMX.Dialogs,                FMX.Platform,           FMX.StdCtrls,
+  FMX.Controls.Presentation,  REST.Types,             FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,        FireDAC.Stan.Param,     FireDAC.Stan.Error,
+  FireDAC.DatS,               FireDAC.Phys.Intf,      FireDAC.DApt.Intf,
+  System.Rtti,                FMX.Grid.Style,         Data.Bind.EngExt,
+  Fmx.Bind.DBEngExt,          Fmx.Bind.Grid,          System.Bindings.Outputs,
+  Fmx.Bind.Editors,           Data.Bind.Components,   Data.Bind.Grid,
+  Data.Bind.DBScope,          FMX.ScrollBox,          FMX.Grid,
+  Data.DB,                    FireDAC.Comp.DataSet,   FireDAC.Comp.Client,
+  REST.Response.Adapter,      REST.Client,            Data.Bind.ObjectScope,
+  FMX.Memo.Types,             FMX.Memo,               System.JSON,
+  FMX.Objects,                System.Net.HttpClient,  FMX.Media,
+  FMX.DialogService;
+
+var
+  gUrlListPokemon   : string;
+  gUrlWebPokemon    : string;
+  gTitleApp         : string;
+  gHeightHeadFooter : integer;
+  gCantidad         : integer;
+  gCount            : integer;
+  gWidthButton      : integer;
+  gLastUrl          : string;
+
+type
+  TForm1 = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    RESTClient1: TRESTClient;
+    RESTRequest1: TRESTRequest;
+    RESTResponse1: TRESTResponse;
+    RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter;
+    FDMemTable1: TFDMemTable;
+    DataSource1: TDataSource;
+    BindSourceDB1: TBindSourceDB;
+    BindingsList1: TBindingsList;
+    Button1: TButton;
+    BindSourceDB2: TBindSourceDB;
+    StringGrid1: TStringGrid;
+    LinkGridToDataSourceBindSourceDB2: TLinkGridToDataSource;
+    RESTClient2: TRESTClient;
+    RESTRequest2: TRESTRequest;
+    RESTResponse2: TRESTResponse;
+    RESTResponseDataSetAdapter2: TRESTResponseDataSetAdapter;
+    FDMemTable2: TFDMemTable;
+    Panel4: TPanel;
+    Image1: TImage;
+    Memo1: TMemo;
+    Image2: TImage;
+    StatusBar1: TStatusBar;
+    MediaPlayer1: TMediaPlayer;
+    Image3: TImage;
+    Label3: TLabel;
+    Label4: TLabel;
+    Panel5: TPanel;
+    Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    Button5: TButton;
+    Panel6: TPanel;
+    AniIndicator1: TAniIndicator;
+    Label5: TLabel;
+    procedure FormCreate(Sender: TObject);
+    procedure Label2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure StringGrid1CellDblClick(const Column: TColumn; const Row: Integer);
+    procedure CargarImagenDesdeURL(URL: string; idx: integer);
+    procedure ReproducirSonidoDesdeURL(URL: string);
+    procedure Button2Click(Sender: TObject);
+    procedure StringGrid1CellClick(const Column: TColumn; const Row: Integer);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Button3Click(Sender: TObject);
+    procedure dataPaginador(isNext:boolean);
+    procedure Button4Click(Sender: TObject);
+    procedure Label1DblClick(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure showLoading();
+    procedure closeLoading();
+  private
+    { Private declarations }
+public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+//--
+uses u_urlOpen, ULoading ;
+//--
+
+{$R *.fmx}
+
+//--
+//-- boton para la carga de la data
+//--
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  JSONValue        : TJSONValue;
+begin
+
+  StringGrid1.ClearColumns;
+  panel4.Visible  := false;
+  button3.Enabled := true;
+  button4.Enabled := true;
+  //--
+  RESTRequest1.Execute;
+end;
+//--
+//-- para manejar la memoria
+//--
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+    Action := TCloseAction.caFree; // Libera la memoria del formulario después de cerrarlo
+end;
+//--
+//--
+//--
+procedure TForm1.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+var
+  dlgResultado : boolean;
+begin
+    dlgResultado := False;
+
+    TDialogService.PreferredMode:=TDialogService.TPreferredMode.Platform;
+    TDialogService.MessageDialog( '¿Estás seguro de continuar?',
+                                  TMsgDlgType.mtConfirmation,
+                                  FMX.Dialogs.mbYesNo,
+                                  TMsgDlgBtn.mbNo,
+                                  0,
+                                  procedure(const AResult: TModalResult)
+                                  begin
+                                    case AResult of
+                                      mrYes: dlgResultado := True;
+                                      mrNo:  dlgResultado := False;
+                                    end;
+    end);
+    //--
+    CanClose := dlgResultado;
+
+end;
+//--
+//-- aca se carga y configuran los objetos del formularios
+//--
+procedure TForm1.FormCreate(Sender: TObject);
+var
+  LCanvas: TCanvas;
+begin
+    //-- TODO: pasar estos valores a un archivo de configuracion
+    gUrlWebPokemon    := 'https://pokeapi.co/';
+    gUrlListPokemon   := 'https://pokeapi.co/api/v2/pokemon/';
+    gTitleApp         := 'Test Api Rest: PokéApi';
+    gHeightHeadFooter := 40;
+    gCantidad         := 20;
+    gCount            := 0;
+    gWidthButton      := 60;
+    gLastUrl          := '-';
+    //--
+    LCanvas := Form1.Canvas;
+    LCanvas.Font.Assign(Label1.Font);
+    //--
+    panel1.Align     := TAlignLayout.Top ;
+    panel1.Height    := gHeightHeadFooter;
+    label1.Text      := gTitleApp;
+    label1.Align     := TAlignLayout.Center;
+    Form1.Caption    := label1.Text;
+    label2.Text      := 'source: ' + gUrlWebPokemon;
+    label2.Align     := TAlignLayout.Right;
+    label2.Width     := LCanvas.TextWidth(label2.Text) + 10;
+    label2.FontColor := TAlphaColors.Blue;
+    Label2.HitTest   := True;
+    Label2.Cursor    := crHandPoint;
+    //--
+    panel2.Align     := TAlignLayout.Top ;
+    panel2.Height    := gHeightHeadFooter; //trunc((form1.Height  - ((gHeightHeadFooter*2)-20))/2);
+    button1.Align    := TAlignLayout.Right;
+    button1.Width    := gWidthButton;
+    button4.Align    := TAlignLayout.Right;
+    button4.Enabled  := false;
+    button4.Width    := gWidthButton;
+    button3.Align    := TAlignLayout.MostRight;
+    button3.Enabled  := false;
+    button3.Width    := gWidthButton;
+    label3.Align     := TAlignLayout.Left;
+    label3.Text      := 'Haga click sobre el boton para cargar la data';
+    label3.Width     := LCanvas.TextWidth(label3.Text) + 10;
+    //--
+    panel3.Align     := TAlignLayout.Top ;
+    panel3.Height    := trunc((form1.Height  - ((gHeightHeadFooter*2)-20))/2);
+    label4.Align     := TAlignLayout.MostTop;
+    label4.Text      := 'Haga click sobre un item para ver sus imagenes';
+    label4.Width     := LCanvas.TextWidth(label4.Text) + 10;
+    StringGrid1.Align:= TAlignLayout.Client;
+    //--
+    panel4.Align     := TAlignLayout.Top ;
+    panel4.Visible   := false;
+    panel4.Height    := 150; //trunc((form1.Height  - ((gHeightHeadFooter*2)-60))/2);
+    image1.Align     := TAlignLayout.Left ;
+    image1.Width     := trunc((form1.Width/4)-10);
+    image1.Height    := panel4.Height -10;
+    image2.Align     := TAlignLayout.Left ;
+    image2.Width     := trunc((form1.Width/4)-10);
+    image2.Height    := panel4.Height -10;
+    image3.Align     := TAlignLayout.Left ;
+    image3.Width     := trunc((form1.Width/4)-10);
+    image3.Height    := panel4.Height -10;
+    memo1.Align      := TAlignLayout.MostLeft;
+    memo1.Width      := trunc((form1.Width/4)-10);
+    memo1.Height     := panel4.Height -10;
+    memo1.Visible    := false;  // solo usado para debug
+    //--
+    panel5.Align     := TAlignLayout.Bottom ;
+    panel5.Height    := gHeightHeadFooter;
+    button2.Align    := TAlignLayout.MostRight;
+    button2.Hint     := 'cerrar';
+    button2.Width    := gWidthButton;
+    button5.Visible  := true;
+    //--
+    //panel6.Align     := TAlignLayout.Center;
+    panel6.Visible   := false;
+    //--
+end;
+//--
+//--
+//--
+procedure TForm1.Label1DblClick(Sender: TObject);
+begin
+
+end;
+//--
+//-- link a la fuente de datos
+//--
+procedure TForm1.Label2Click(Sender: TObject);
+var
+  URL: string;
+begin
+  URL := gUrlWebPokemon;
+  //--
+  tUrlOpen.Open(URL);
+end;
+//--
+//-- el doble click era lento , se extendio al evento click
+//--
+procedure TForm1.StringGrid1CellClick(const Column: TColumn;
+  const Row: Integer);
+begin
+  //StringGrid1CellDblClick(Column, Row);
+end;
+//--
+//-- se carga la ficha de los pokemones, pero solo muestro las imagenes para este requerimiento
+//--
+procedure TForm1.StringGrid1CellDblClick(const Column: TColumn;
+  const Row: Integer);
+var
+  URL              : string;
+  JSONValue        : TJSONValue;
+  imagen           : string;
+  LoggingService   : IFMXLoggingService;
+begin
+  //--
+  URL := StringGrid1.Cells[1, StringGrid1.Row];
+  //--
+  //-- esto es para no cargar dos veces el mismo pokemon
+  //--
+  if gLastUrl = URL then
+  begin
+    closeLoading();
+    exit;
+  end;
+  //--
+  showLoading();
+  //--
+  try
+    RESTClient2.BaseURL             := gUrlListPokemon;
+    RESTRequest2.SynchronizedEvents := true;
+    RESTRequest2.Resource           := StringReplace(URL,gUrlListPokemon,'',[rfReplaceAll, rfIgnoreCase]);
+    RESTRequest2.Method             := TRESTRequestMethod.rmGET;
+    RESTRequest2.ClearBody;
+    RESTRequest2.Params.Clear;
+    //--
+    //-- TODO: revisar pq en algunos casos aleatorios da un error de memoria
+    try
+      RESTRequest2.Execute;
+    except on e:Exception do
+      begin
+        closeLoading();
+        Log.d('--> *** problema de iteracion de memoria : ' + e.Message); //-- se guarda en log FMX
+        Exit;
+      end;
+    end;
+    //--
+    if RESTResponse2.StatusCode = 200 then
+    begin
+      JSONValue        := RESTResponse2.JSONValue;
+      if JSONValue <> nil then
+      begin
+        try
+          Memo1.Lines.Text := JSONValue.Format;
+          imagen           := JSONValue.GetValue<string>('front_default');
+          CargarImagenDesdeURL(imagen,1);
+          imagen           := JSONValue.GetValue<string>('back_default');
+          CargarImagenDesdeURL(imagen,2);
+          imagen           := JSONValue.GetValue<string>('front_shiny');
+          CargarImagenDesdeURL(imagen,3);
+          //--
+          panel4.Visible := true;
+          gLastUrl       := URL;
+        finally
+          JSONValue.Free;
+          closeLoading();
+        end;
+      end
+      else
+      begin
+        ShowMessage('Error al parsear JSON Detalle');
+        closeLoading();
+      end;
+    end
+    else
+    begin
+      ShowMessage('Error: ' + IntToStr(RESTResponse1.StatusCode));
+    end;
+  finally
+    //closeLoading();
+  end;
+end;
+//--
+//--
+//--
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  //-->ReproducirSonidoDesdeURL('https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/6.ogg');
+  Close;
+end;
+//--
+//--
+//--
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+  dataPaginador(true);
+end;
+//--
+//--
+//--
+procedure TForm1.Button4Click(Sender: TObject);
+begin
+  dataPaginador(false);
+end;
+//--
+//--
+//--
+procedure TForm1.Button5Click(Sender: TObject);
+begin
+  showLoading();
+  //Sleep(5000);
+  //closeLoading();
+end;
+
+//--
+//-- la carga de las imagenes desde la web
+//--
+procedure TForm1.CargarImagenDesdeURL(URL: string; idx: integer);
+var
+  HttpClient: THttpClient;
+  Stream: TMemoryStream;
+  Bitmap: TBitmap;
+begin
+  HttpClient := THttpClient.Create;
+  Stream     := TMemoryStream.Create;
+  Bitmap     := TBitmap.Create;
+  try
+    HttpClient.Get(URL, Stream);
+    Stream.Position := 0;
+    Bitmap.LoadFromStream(Stream);
+    //-- TODO: pasar esto a una imagen list
+    case idx of
+      1: Image1.Bitmap.Assign(Bitmap);
+      2: Image2.Bitmap.Assign(Bitmap);
+      3: Image3.Bitmap.Assign(Bitmap);
+    else
+      ShowMessage('idx img no definido');
+    end;
+  finally
+    Stream.Free;
+    Bitmap.Free;
+    HttpClient.Free;
+  end;
+end;
+//--
+//-- no usado, la idea era reproducir audiblemente los gruñidos de los pokemon
+//-- pero el objeto TMedia no soporta el formato OGG se mantiene para una proxima
+//-- oportunidad
+//--
+procedure TForm1.ReproducirSonidoDesdeURL(URL: string);
+begin
+  MediaPlayer1.FileName := URL;
+  MediaPlayer1.Play;
+end;
+//--
+//--
+//--
+procedure TForm1.dataPaginador(isNext:boolean);
+var
+   JSONValue  : TJSONValue;
+begin
+  panel4.Visible := false;
+  //--
+  if isNext then
+    gCount := gCount + gCantidad
+  else
+    gCount := gCount - gCantidad;
+  //--
+  StringGrid1.ClearColumns;
+  //--
+  //-- TODO: mejorar
+  if (gCount < 0) or (gCount > 1302) then
+  begin
+    gCount := 0
+  end;
+  //--
+  RESTClient1.BaseURL             := gUrlListPokemon;
+  RESTRequest1.SynchronizedEvents := true;
+  RESTRequest1.Resource           := '?offset=' + IntToStr(gCount)+ '&limit=20'   ;
+  RESTRequest1.Method             := TRESTRequestMethod.rmGET;
+  RESTRequest1.ClearBody;
+  RESTRequest1.Params.Clear;
+  RESTRequest1.Execute;
+
+  if RESTResponse1.StatusCode = 200 then
+  begin
+    JSONValue        := RESTResponse1.JSONValue;
+    if JSONValue <> nil then
+    begin
+      try
+        Memo1.Lines.Text := JSONValue.Format;
+      finally
+        //nada
+      end;
+    end;
+    {if JSONValue <> nil then
+    end;}
+  end;
+end;
+//--
+//--
+//--
+procedure TForm1.showLoading();
+begin
+  Panel6.Visible  := true;
+  Panel6.Width    := Panel3.Width;
+  Panel6.Align    := TAlignLayout.MostTop ;
+  //Panel6.Repaint;
+  // Panel6.BringToFront;
+  //Panel6.Position := Panel3.Position;
+
+end;
+//--
+//--
+//--
+procedure TForm1.closeLoading();
+begin
+  Panel6.Visible := false;
+end;
+
+
+end.  //--fin :)

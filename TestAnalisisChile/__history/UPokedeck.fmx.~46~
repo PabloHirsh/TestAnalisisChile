@@ -1,0 +1,318 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 664
+  ClientWidth = 780
+  StyleLookup = 'calloutpanelstyle'
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
+  DesignerMasterStyle = 0
+  object Panel1: TPanel
+    Position.X = 48.000000000000000000
+    Position.Y = 16.000000000000000000
+    Size.Width = 177.000000000000000000
+    Size.Height = 81.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object Label1: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 8.000000000000000000
+      Text = 'Label1'
+      TabOrder = 1
+    end
+    object Label2: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 40.000000000000000000
+      StyleLookup = 'calendarlabelstyle'
+      Text = 'Label2'
+      TabOrder = 0
+      OnClick = Label2Click
+    end
+  end
+  object Panel2: TPanel
+    Position.X = 48.000000000000000000
+    Position.Y = 105.000000000000000000
+    Size.Width = 289.000000000000000000
+    Size.Height = 56.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object Button1: TButton
+      Hint = 'recargar data'
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.X = 152.000000000000000000
+      Position.Y = 25.000000000000000000
+      Size.Width = 71.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'refreshtoolbutton'
+      TabOrder = 9
+      Text = 'Button1'
+      OnClick = Button1Click
+    end
+    object Label3: TLabel
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.X = 50.000000000000000000
+      Position.Y = 15.000000000000000000
+      Text = 'Label3'
+      TabOrder = 10
+    end
+    object Button3: TButton
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.X = 201.000000000000000000
+      Position.Y = 8.000000000000000000
+      StyleLookup = 'nexttoolbuttonbordered'
+      TabOrder = 11
+      Text = 'Button3'
+      OnClick = Button3Click
+    end
+    object Button4: TButton
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.X = 96.000000000000000000
+      Position.Y = 16.000000000000000000
+      StyleLookup = 'priortoolbuttonbordered'
+      TabOrder = 12
+      Text = 'Button4'
+      OnClick = Button4Click
+    end
+  end
+  object Panel3: TPanel
+    Position.X = 40.000000000000000000
+    Position.Y = 169.000000000000000000
+    Size.Width = 313.000000000000000000
+    Size.Height = 120.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    object StringGrid1: TStringGrid
+      CanFocus = True
+      ClipChildren = True
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.X = 48.000000000000000000
+      Position.Y = 64.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 47.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'gridstyle'
+      TabOrder = 8
+      RowCount = 0
+      Options = [ColumnResize, ColumnMove, ColLines, RowLines, Tabs, Header, HeaderClick, AutoDisplacement]
+      OnCellClick = StringGrid1CellClick
+      OnCellDblClick = StringGrid1CellDblClick
+      Viewport.Width = 196.000000000000000000
+      Viewport.Height = 22.000000000000000000
+    end
+    object Label4: TLabel
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.X = 48.000000000000000000
+      Position.Y = 24.000000000000000000
+      Text = 'Label4'
+      TabOrder = 9
+    end
+  end
+  object Panel4: TPanel
+    Position.X = 40.000000000000000000
+    Position.Y = 297.000000000000000000
+    Size.Width = 313.000000000000000000
+    Size.Height = 120.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 17
+    object Image1: TImage
+      MultiResBitmap = <
+        item
+        end>
+      Position.X = 16.000000000000000000
+      Position.Y = 24.000000000000000000
+    end
+    object Memo1: TMemo
+      Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+      DataDetectorTypes = []
+      Position.X = 209.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 81.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 11
+      Viewport.Width = 69.000000000000000000
+      Viewport.Height = 77.000000000000000000
+    end
+    object Image2: TImage
+      MultiResBitmap = <
+        item
+        end>
+      Position.X = 74.000000000000000000
+      Position.Y = 48.000000000000000000
+    end
+    object Image3: TImage
+      MultiResBitmap = <
+        item
+        end>
+      Position.X = 128.000000000000000000
+      Position.Y = 24.000000000000000000
+    end
+  end
+  object StatusBar1: TStatusBar
+    Position.Y = 642.000000000000000000
+    ShowSizeGrip = True
+    Size.Width = 780.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 18
+  end
+  object Panel5: TPanel
+    Position.X = 56.000000000000000000
+    Position.Y = 425.000000000000000000
+    Size.Width = 305.000000000000000000
+    Size.Height = 64.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 20
+    object Button2: TButton
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.X = 193.000000000000000000
+      Position.Y = 24.000000000000000000
+      StyleLookup = 'escapetoolbuttonbordered'
+      TabOrder = 0
+      Text = 'Button2'
+      OnClick = Button2Click
+    end
+  end
+  object RESTClient1: TRESTClient
+    BaseURL = 'https://pokeapi.co/api/v2/pokemon'
+    Params = <>
+    SynchronizedEvents = False
+    Left = 480
+    Top = 32
+  end
+  object RESTRequest1: TRESTRequest
+    AssignedValues = [rvConnectTimeout, rvReadTimeout]
+    Client = RESTClient1
+    Params = <>
+    Response = RESTResponse1
+    SynchronizedEvents = False
+    Left = 480
+    Top = 96
+  end
+  object RESTResponse1: TRESTResponse
+    RootElement = 'results'
+    Left = 480
+    Top = 152
+  end
+  object RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter
+    Dataset = FDMemTable1
+    FieldDefs = <>
+    Response = RESTResponse1
+    TypesMode = Rich
+    Left = 464
+    Top = 216
+  end
+  object FDMemTable1: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode, uvLockMode, uvLockPoint, uvLockWait, uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
+    UpdateOptions.LockWait = True
+    UpdateOptions.FetchGeneratorsPoint = gpNone
+    UpdateOptions.CheckRequired = False
+    Left = 464
+    Top = 288
+  end
+  object DataSource1: TDataSource
+    DataSet = FDMemTable1
+    Left = 600
+    Top = 472
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSource = DataSource1
+    ScopeMappings = <>
+    Left = 616
+    Top = 408
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 708
+    Top = 37
+    object LinkGridToDataSourceBindSourceDB2: TLinkGridToDataSource
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB2
+      GridControl = StringGrid1
+      Columns = <>
+    end
+  end
+  object BindSourceDB2: TBindSourceDB
+    DataSet = FDMemTable1
+    ScopeMappings = <>
+    Left = 712
+    Top = 96
+  end
+  object RESTClient2: TRESTClient
+    BaseURL = 'https://pokeapi.co/api/v2/pokemon/6'
+    Params = <>
+    SynchronizedEvents = False
+    Left = 592
+    Top = 40
+  end
+  object RESTRequest2: TRESTRequest
+    AssignedValues = [rvConnectTimeout, rvReadTimeout]
+    Client = RESTClient2
+    Params = <>
+    Response = RESTResponse2
+    SynchronizedEvents = False
+    Left = 576
+    Top = 96
+  end
+  object RESTResponse2: TRESTResponse
+    RootElement = 'sprites'
+    Left = 576
+    Top = 160
+  end
+  object RESTResponseDataSetAdapter2: TRESTResponseDataSetAdapter
+    Dataset = FDMemTable2
+    FieldDefs = <>
+    Response = RESTResponse2
+    TypesMode = Rich
+    Left = 600
+    Top = 216
+  end
+  object FDMemTable2: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode, uvLockMode, uvLockPoint, uvLockWait, uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
+    UpdateOptions.LockWait = True
+    UpdateOptions.FetchGeneratorsPoint = gpNone
+    UpdateOptions.CheckRequired = False
+    Left = 600
+    Top = 280
+  end
+  object MediaPlayer1: TMediaPlayer
+    Left = 648
+    Top = 560
+  end
+end

@@ -1,0 +1,38 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  Caption = 'Form2'
+  ClientHeight = 480
+  ClientWidth = 640
+  Transparency = True
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object Label1: TLabel
+    Position.X = 237.000000000000000000
+    Position.Y = 288.000000000000000000
+    Size.Width = 120.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Loading...'
+    TabOrder = 0
+    object ColorAnimation2: TColorAnimation
+      Duration = 0.200000002980232200
+      StartValue = claWhite
+      StopValue = claWhite
+    end
+  end
+  object ColorAnimation1: TColorAnimation
+    Duration = 0.200000002980232200
+    StartValue = claWhite
+    StopValue = claWhite
+  end
+  object AniIndicator1: TAniIndicator
+    Align = Center
+    Enabled = True
+    Size.Width = 165.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+  end
+end
